@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2 col-sm-12">
+      <app-car-filter (currentCarsEvent)="receiveCurrentCars($event)" (dataLoadedEvent)="receiveDataLoaded($event)">
+      </app-car-filter>
+    </div>
+    <div class="col-lg-10 col-sm-12">
+      <div *ngIf="dataLoaded == true" class="mb-3">
+        <label for="filterText" class="form-label"
+        ><h1 class="display-6">Search A Car</h1></label
+        >
+        <input
+          type="text"
+          [(ngModel)]="filterText"
+          class="form-control"
+          id="filterText"
+          placeholder="search"
+        />
+      </div>
+      <div *ngIf="filterText" class="alert alert-primary">
+        {{ filterText }} searched.
+      </div>
+      <div *ngIf="dataLoaded">
+        <div class="card-title">
+          <h1 class="display-6">Cars</h1>
+          <div class="container-fluid">
+            <div class="row">
+              <button class="btn btn-outline-dark mb-3" (click)="setCurrentRouteToCarAdd()">Rent your car</button>
+            </div>
+          </div>
+        </div>
+        <div class="grid-container">
+          <div class="card mb-5 bg-body rounded"
+               *ngFor="let car of currentCars | carFilter: filterText; let i = index" @fade
+               (mouseover)="mouseIsOver(i)" (mouseleave)="mouseIsNotOver()" [class]="mouseIsOverOn == i ? 'shadow': null">
+            <img [src]="car.images[0]" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{car.brandName}}</h5>
+              <p class="card-text">{{car.description | cardDescription}}</p>
+              <i [@fav]="triggerAni(i)" (click)="setFav(car.id)" [class]="getFavClass(car.id)"
+                 style="font-size: 25px"></i>
+              <div class="btn-group float-end" role="group">
+                <button (click)="setCurrentRouteToCarEdit(car.id)" type="button" class="btn btn-outline-dark">Edit
+                </button>
+                <button
+                  (click)="setCurrentRouteToCarDetail(car.id)"
+                  type="button"
+                  class="btn btn-outline-dark"
+                >
+                  Review
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

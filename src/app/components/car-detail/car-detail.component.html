@@ -1,0 +1,45 @@
+<div *ngIf="dataLoaded == false" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div
+  *ngIf="dataLoaded == true"
+  class=""
+  style="margin-top: 30px"
+>
+  <div class="card-body">
+    <div class="card-title">
+      <h1 class="display-3">{{ car.brandName }}</h1>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12 imageContainer">
+          <img [src]="getCurrentImage()" class="d-block w-100 h-100"/>
+          <div class="right" (click)="setNextCurrentImage()"></div>
+          <div class="left" (click)="setBackCurrentImage()"></div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <div class="card-body">
+            <h5 class="card-title">Description</h5>
+            <p class="card-text">{{ car.description }}</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Renter: {{car.companyName}}</li>
+            <li class="list-group-item">Colour: {{ car.colourName }}</li>
+            <li class="list-group-item">Door Number: {{car.doorNumber}}</li>
+            <li class="list-group-item">Engine Type: {{car.engineType}}</li>
+            <li class="list-group-item">Fuel Type: {{car.fuelType}}</li>
+            <li class="list-group-item">Fuel Consumption: {{car.fuelConsumption}}</li>
+            <li class="list-group-item">Model: {{ car.modelYear }}</li>
+            <li class="list-group-item">
+              Daily Price: {{ car.dailyPrice | currency }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-renting-modal></app-renting-modal>
+</div>
